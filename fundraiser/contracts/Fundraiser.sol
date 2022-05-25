@@ -17,6 +17,9 @@ contract Fundraiser is Ownable {
     }
 
     mapping(address=> Donation[]) private _donations;
+    event DonationReceived(address indexed donor, uint256 value);
+    event Withdraw(uint256 amount);
+
 
     string public name;
     string public url;
@@ -59,6 +62,8 @@ contract Fundraiser is Ownable {
 	     _donations[msg.sender].push(donation);
 	     totalDonations = totalDonations.add(msg.value);
 	     donationsCount++;
+
+	     emit DonationReceived(msg.sender, msg.value);
     }
 
     function myDonations() public view returns(
@@ -78,5 +83,16 @@ contract Fundraiser is Ownable {
       }
 
       return (values, dates);
+   }
+
+   function withdraw() public onlyOwner {
+        uint256 balance = address(this).balance;
+	beneficiary.transfer(balance);
+	emit Withdraw(balance);
+   }
+
+   fallback () external payable {
+       totalDonations = totalDonations.add(msg.value);
+       donationsCount++;
    }
 }
