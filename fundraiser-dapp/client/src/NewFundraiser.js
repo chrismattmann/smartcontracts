@@ -52,6 +52,7 @@ const NewFundraiser = () => {
 		    FundraiserFactory.abi,
 		    deployedNetwork && deployedNetwork.address);
 		setWeb3(web3);
+		console.log(instance);
 		setContract(instance);
 		setAccounts(accounts);
 	    }catch(error) {
@@ -59,17 +60,18 @@ const NewFundraiser = () => {
 		     );
 		console.error(error);
 	    }
-            
 	}
 	init();
     }, []);
+
 
     const handleSubmit = async() => {
 	const imageURL = image;
 	const url = website;
 	const beneficiary = address;
-	
-	await contract.methods.createFundraiser(
+
+	if (contract != null){	
+   	  await contract.methods.createFundraiser(
             name,
 	    website,
 	    imageURL,
@@ -77,8 +79,11 @@ const NewFundraiser = () => {
 	    beneficiary
 	).send( {from: accounts[0]} );
 
-	alert(`Successfully created fundraiser.`);
-
+	    alert(`Successfully created fundraiser.`);
+	}
+	else{
+	    alert('Failed to load web3, accounts, or contract. Check console for details.');
+	}
     }
 
     return (

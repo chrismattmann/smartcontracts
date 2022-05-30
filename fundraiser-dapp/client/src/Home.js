@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from '@material-ui/core/styles';
+import Button from '@material-ui/core/Button';
 import getWeb3 from "./getWeb3"
 import FundraiserFactory from "./contracts/FundraiserFactory.json";
 import Web3 from 'web3';
@@ -21,6 +22,7 @@ const Home = () => {
     const [ contract, setContract ] = useState(null);
     const [ accounts, setAccounts ] = useState(null);
     const web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'))
+    const classes = useStyles();
     
     useEffect(() => {
 	init()

@@ -6,6 +6,7 @@ import "./App.css";
 import Home from "./Home";
 import NewFundraiser from "./NewFundraiser";
 import FundraiserCard from "./FundraiserCard";
+import Receipts from "./Receipts";
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -68,6 +69,7 @@ const App = () => {
        <Routes>	  
         <Route path="/" element={<Home/>} />
         <Route path="/new/" element={<NewFundraiser/>} />
+	<Route path="/receipts" element={<Receipts/>} />
        </Routes>
     </div>
   )
